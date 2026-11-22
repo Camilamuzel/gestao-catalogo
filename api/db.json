@@ -1,0 +1,5 @@
+{
+  "produtos": [
+    { "id": "1", "nome": "Monitor 24 Polegadas", "preco": 899.90, "imagem": "https://via.placeholder.com/150" }
+  ]
+}
