@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestão de Guarda-Roupa</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Monte seu Guarda Roupa!</h1>
+
+  <!-- Formulário novo item (POST) -->
+  <form id="form-produto">
+    <input type="text" id="titulo" placeholder="Nome do produto" required>
+    <input type="number" id="preco" placeholder="Preço" step="0.01" required>
+    <button type="submit">Adicionar ao Catálogo</button>
+  </form>
+
+  <!-- Onde os itens vão aparecer (GET) -->
+  <div id="catalogo-container" class="grid"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
