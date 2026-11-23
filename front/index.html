@@ -9,16 +9,16 @@
 <body>
   <h1>Monte seu Guarda Roupa!</h1>
 
-  <!-- Formulário novo item (POST) -->
+<!-- Formulário de Cadastro e Edição -->
   <form id="form-produto">
-
     <input type="hidden" id="produto-id">
-    
     <input type="text" id="titulo" placeholder="Nome do produto" required>
     <input type="number" id="preco" placeholder="Preço" step="0.01" required>
-    <button type="submit">Adicionar ao Catálogo</button>
+    <input type="url" id="imagem" placeholder="URL da imagem (opcional)">
+    <button type="submit" id="btn-salvar">Adicionar ao Catálogo</button>
+    <button type="button" id="btn-cancelar" style="display: none;">Cancelar</button>
   </form>
-
+  
   <!-- Campo de Consulta / Pesquisa -->
   <div style="margin-bottom: 20px;">
     <input type="search" id="campo-busca" placeholder="Consultar produto pelo nome..." style="width: 100%; max-width: 400px;">
