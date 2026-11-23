@@ -4,12 +4,16 @@
   <meta charset="UTF-8">
   <title>Gestão de Guarda-Roupa</title>
   <link rel="stylesheet" href="style.css">
+  <script src="scripts.js" defer></script>
 </head>
 <body>
   <h1>Monte seu Guarda Roupa!</h1>
 
   <!-- Formulário novo item (POST) -->
   <form id="form-produto">
+
+    <input type="hidden" id="produto-id">
+    
     <input type="text" id="titulo" placeholder="Nome do produto" required>
     <input type="number" id="preco" placeholder="Preço" step="0.01" required>
     <button type="submit">Adicionar ao Catálogo</button>
