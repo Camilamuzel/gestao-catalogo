@@ -57,3 +57,34 @@ form.addEventListener('submit', async (e) => {
   limparForm();
   carregarCatalogo();
 });
+
+// 4. PREPARAR EDIÇÃO (Busca o item direto da lista em memória)
+function editar(id) {
+  const p = produtos.find(item => item.id == id);
+  document.getElementById('produto-id').value = p.id;
+  document.getElementById('titulo').value = p.nome;
+  document.getElementById('preco').value = p.preco;
+  document.getElementById('imagem').value = p.imagem.includes('placeholder') ? '' : p.imagem;
+  
+  document.getElementById('btn-salvar').textContent = 'Salvar Alterações';
+  document.getElementById('btn-cancelar').style.display = 'inline-block';
+}
+
+// 5. EXCLUIR (DELETE)
+async function excluir(id) {
+  if (!confirm('Excluir este produto?')) return;
+  await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+  carregarCatalogo();
+}
+
+// LIMPAR FORMULÁRIO
+function limparForm() {
+  form.reset();
+  document.getElementById('produto-id').value = '';
+  document.getElementById('btn-salvar').textContent = 'Adicionar ao Catálogo';
+  document.getElementById('btn-cancelar').style.display = 'none';
+}
+document.getElementById('btn-cancelar').addEventListener('click', limparForm);
+
+// Inicia
+carregarCatalogo();
