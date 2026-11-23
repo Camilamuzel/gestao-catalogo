@@ -1,0 +1,20 @@
+services:
+  # Serviço 1: API CRUD com json-server
+  api-catalogo:
+    build: ./api
+    container_name: catalogo-api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api/db.json:/app/db.json
+
+  # Serviço 2: Servidor Web para o HTML/CSS/JS
+  web-catalogo:
+    image: nginx:alpine
+    container_name: catalogo-web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    depends_on:
+      - api-catalogo
