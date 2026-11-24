@@ -26,6 +26,17 @@
     <input type="search" id="campo-busca" placeholder="Consultar produto pelo nome..." style="width: 100%; max-width: 400px;">
   </div>
 
+  <!-- Painel de Solicitação de Entrega (Abre ao clicar na peça) -->
+  <form id="form-entrega" style="display: none;">
+    <h3 id="titulo-entrega" style="width: 100%; color: #6c47ff;">Dados de Entrega</h3>
+    <input type="hidden" id="entrega-produto">
+    <input type="text" id="entrega-endereco" placeholder="Endereço completo (Rua, Nº, Bairro)" required>
+    <input type="tel" id="entrega-telefone" placeholder="Telefone / WhatsApp" required>
+    <button type="submit" id="btn-confirmar-entrega">Confirmar Entrega</button>
+    <button type="button" id="btn-fechar-entrega">Fechar</button>
+  </form>
+
+
   <!-- Onde os itens vão aparecer (GET) -->
   <div id="catalogo-container" class="grid"></div>
 
