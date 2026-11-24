@@ -1,5 +1,40 @@
 {
   "produtos": [
-    { "id": "1", "nome": "Monitor 24 Polegadas", "preco": 899.90, "imagem": "https://via.placeholder.com/150" }
+    {
+      "id": "1",
+      "nome": "Jaqueta Jeans Oversized Vintage",
+      "preco": 189.90,
+      "imagem": "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "id": "2",
+      "nome": "Vestido Midi Floral de Verão",
+      "preco": 145.00,
+      "imagem": "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "id": "3",
+      "nome": "Moletom Streetwear Off-White",
+      "preco": 159.90,
+      "imagem": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "id": "4",
+      "nome": "Calça Cargo Utilitária Bege",
+      "preco": 169.50,
+      "imagem": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "id": "5",
+      "nome": "Blazer Alfaiataria Estruturado",
+      "preco": 249.00,
+      "imagem": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "id": "6",
+      "nome": "Camiseta Básica Algodão Premium",
+      "preco": 79.90,
+      "imagem": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80"
+    }
   ]
 }
