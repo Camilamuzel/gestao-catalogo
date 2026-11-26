@@ -185,16 +185,58 @@ button:hover {
   color: var(--branco);
 }
 
-/* RESPONSIVO PARA CELULAR */
-@media (max-width: 680px) {
-  h1 {
-    flex-direction: column;
-    text-align: center;
-    padding: 24px;
-  }
-  h1::after {
-    width: 100%;
-    height: 160px;
-  }
+
+/* MENU DE NAVEGAÇÃO SPA */
+.spa-nav {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
+.nav-btn {
+  background: var(--branco);
+  color: var(--texto);
+  border: 2px solid #e4e1f5;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-weight: 800;
+}
+
+.nav-btn.ativo {
+  background: var(--roxo);
+  color: var(--branco);
+  border-color: var(--roxo);
+  box-shadow: 0 6px 16px rgba(108, 71, 255, 0.25);
+}
+
+/* FORMULÁRIO DE ENTREGA NA TELA 2 */
+#form-entrega {
+  background: var(--branco);
+  padding: 22px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(108, 71, 255, 0.08);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+#btn-confirmar-entrega {
+  background: var(--roxo);
+  color: var(--branco);
+}
+
+#btn-voltar-catalogo {
+  background: var(--amarelo);
+  color: var(--texto);
+}
+
+/* 3 BOTÕES NOS CARDS DO CATÁLOGO */
+.card button {
+  padding: 7px 10px;
+  font-size: 0.8rem;
+  margin: 3px 2px;
+}
+
+.card button:nth-of-type(1) { background: var(--roxo); color: var(--branco); }
+.card button:nth-of-type(2) { background: var(--amarelo); color: var(--texto); }
+.card button:nth-of-type(3) { background: var(--coral); color: var(--branco); }

@@ -37,6 +37,39 @@ document.getElementById('campo-busca').addEventListener('input', (e) => {
   mostrarProdutos(produtos.filter(p => p.nome.toLowerCase().includes(termo)));
 });
 
+//ENTREGAS - formulário             (!rever!)
+function abrirEntrega(nomeProduto) {
+  document.getElementById('entrega-produto').value = nomeProduto;
+  document.getElementById('titulo-entrega').textContent = `Entrega da peça: ${nomeProduto}`;
+  formEntrega.style.display = 'flex';
+  formEntrega.scrollIntoView({ behavior: 'smooth' });
+}
+
+formEntrega.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const novaEntrega = {
+    produto: document.getElementById('entrega-produto').value,
+    endereco: document.getElementById('entrega-endereco').value,
+    telefone: document.getElementById('entrega-telefone').value,
+    data: new Date().toLocaleDateString('pt-BR')
+  };
+
+  await fetch(ENTREGAS_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(novaEntrega)
+  });
+
+  alert(`Entrega registrada para "${novaEntrega.produto}"!`);
+  formEntrega.reset();
+  formEntrega.style.display = 'none';
+});
+
+document.getElementById('btn-fechar-entrega').addEventListener('click', () => {
+  formEntrega.reset();
+  formEntrega.style.display = 'none';
+});
+
 // 3. CRIAR (POST) ou ATUALIZAR (PATCH)
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
