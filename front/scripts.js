@@ -1,12 +1,26 @@
-const API_URL = ['localhost', '127.0.0.1'].includes(window.location.hostname)
-  ? 'http://localhost:3000/produtos'
-  : 'https://gestao-catalogo-1.onrender.com/produtos';
+const BASE_URL = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+  ? 'http://localhost:3000'
+  : 'https://gestao-catalogo-1.onrender.com';
+
+const API_URL = `${BASE_URL}/produtos`;
+const ENTREGAS_URL = `${BASE_URL}/entregas`;
 
 const form = document.getElementById('form-produto');
+const formEntrega = document.getElementById('form-entrega');
 const container = document.getElementById('catalogo-container');
+const listaEntregas = document.getElementById('lista-entregas');
 let produtos = [];
 
-// 1. LER (GET) e RENDERIZAR
+function navegarPara(tela) {
+  document.getElementById('view-catalogo').style.display = tela === 'catalogo' ? 'block' : 'none';
+  document.getElementById('view-entregas').style.display = tela === 'entregas' ? 'block' : 'none';
+
+  document.getElementById('nav-catalogo').classList.toggle('ativo', tela === 'catalogo');
+  document.getElementById('nav-entregas').classList.toggle('ativo', tela === 'entregas');
+
+  if (tela === 'entregas') carregarEntregas();
+}
+
 async function carregarCatalogo() {
   try {
     const res = await fetch(API_URL);
@@ -24,6 +38,7 @@ function mostrarProdutos(lista) {
           <img src="${p.imagem || 'https://via.placeholder.com/150'}" alt="${p.nome}">
           <h3>${p.nome}</h3>
           <p>R$ ${Number(p.preco).toFixed(2)}</p>
+          <button onclick="irParaEntrega('${p.nome}')">Entregar</button>
           <button onclick="editar('${p.id}')">Editar</button>
           <button onclick="excluir('${p.id}')">Excluir</button>
         </div>
@@ -31,46 +46,11 @@ function mostrarProdutos(lista) {
     : '<p>Nenhum produto encontrado.</p>';
 }
 
-// 2. CONSULTAR (Busca em tempo real)
 document.getElementById('campo-busca').addEventListener('input', (e) => {
   const termo = e.target.value.toLowerCase();
   mostrarProdutos(produtos.filter(p => p.nome.toLowerCase().includes(termo)));
 });
 
-//ENTREGAS - formulário             (!rever!)
-function abrirEntrega(nomeProduto) {
-  document.getElementById('entrega-produto').value = nomeProduto;
-  document.getElementById('titulo-entrega').textContent = `Entrega da peça: ${nomeProduto}`;
-  formEntrega.style.display = 'flex';
-  formEntrega.scrollIntoView({ behavior: 'smooth' });
-}
-
-formEntrega.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const novaEntrega = {
-    produto: document.getElementById('entrega-produto').value,
-    endereco: document.getElementById('entrega-endereco').value,
-    telefone: document.getElementById('entrega-telefone').value,
-    data: new Date().toLocaleDateString('pt-BR')
-  };
-
-  await fetch(ENTREGAS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(novaEntrega)
-  });
-
-  alert(`Entrega registrada para "${novaEntrega.produto}"!`);
-  formEntrega.reset();
-  formEntrega.style.display = 'none';
-});
-
-document.getElementById('btn-fechar-entrega').addEventListener('click', () => {
-  formEntrega.reset();
-  formEntrega.style.display = 'none';
-});
-
-// 3. CRIAR (POST) ou ATUALIZAR (PATCH)
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const id = document.getElementById('produto-id').value;
@@ -91,7 +71,6 @@ form.addEventListener('submit', async (e) => {
   carregarCatalogo();
 });
 
-// 4. PREPARAR EDIÇÃO (Busca o item direto da lista em memória)
 function editar(id) {
   const p = produtos.find(item => item.id == id);
   document.getElementById('produto-id').value = p.id;
@@ -103,14 +82,12 @@ function editar(id) {
   document.getElementById('btn-cancelar').style.display = 'inline-block';
 }
 
-// 5. EXCLUIR (DELETE)
 async function excluir(id) {
   if (!confirm('Excluir este produto?')) return;
   await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
   carregarCatalogo();
 }
 
-// LIMPAR FORMULÁRIO
 function limparForm() {
   form.reset();
   document.getElementById('produto-id').value = '';
@@ -119,5 +96,57 @@ function limparForm() {
 }
 document.getElementById('btn-cancelar').addEventListener('click', limparForm);
 
-// Inicia
+function irParaEntrega(nomeProduto) {
+  document.getElementById('entrega-produto').value = nomeProduto;
+  document.getElementById('titulo-entrega').textContent = `Solicitar Entrega: ${nomeProduto}`;
+  navegarPara('entregas');
+}
+
+formEntrega.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const novaEntrega = {
+    produto: document.getElementById('entrega-produto').value,
+    endereco: document.getElementById('entrega-endereco').value,
+    telefone: document.getElementById('entrega-telefone').value,
+    data: new Date().toLocaleDateString('pt-BR')
+  };
+
+  await fetch(ENTREGAS_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(novaEntrega)
+  });
+
+  formEntrega.reset();
+  document.getElementById('titulo-entrega').textContent = 'Solicitar Nova Entrega';
+  carregarEntregas();
+});
+
+async function carregarEntregas() {
+  try {
+    const res = await fetch(ENTREGAS_URL);
+    const entregas = await res.json();
+
+    listaEntregas.innerHTML = entregas.length
+      ? entregas.map(ent => `
+          <div class="card">
+            <h3>${ent.produto}</h3>
+            <p style="font-size: 0.9rem; color: var(--texto); font-weight: 400;">📍 ${ent.endereco}</p>
+            <p style="font-size: 0.9rem;">📞 ${ent.telefone}</p>
+            <small style="display:block; margin-bottom:10px; color:#666;">Data: ${ent.data || 'Hoje'}</small>
+            <button onclick="concluirEntrega('${ent.id}')" style="background: var(--coral); color: white;">Concluir / Remover</button>
+          </div>
+        `).join('')
+      : '<p>Nenhuma entrega solicitada ainda.</p>';
+  } catch (err) {
+    listaEntregas.innerHTML = '<p style="color:red">Erro ao carregar entregas.</p>';
+  }
+}
+
+async function concluirEntrega(id) {
+  if (!confirm('Remover este registro de entrega?')) return;
+  await fetch(`${ENTREGAS_URL}/${id}`, { method: 'DELETE' });
+  carregarEntregas();
+}
+
 carregarCatalogo();

@@ -2,44 +2,51 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestão de Guarda-Roupa</title>
   <link rel="stylesheet" href="style.css">
   <script src="scripts.js" defer></script>
 </head>
 <body>
 
-  
+  <!-- SPA adicionado - teste -->
+  <nav class="spa-nav">
+    <button type="button" id="nav-catalogo" class="nav-btn ativo" onclick="navegarPara('catalogo')">👗 Catálogo de Roupas</button>
+    <button type="button" id="nav-entregas" class="nav-btn" onclick="navegarPara('entregas')">🚚 Gestão de Entregas</button>
+  </nav>
+
   <h1>Monte seu Guarda Roupa!</h1>
 
-<!-- Formulário de Cadastro e Edição -->
-  <form id="form-produto">
-    <input type="hidden" id="produto-id">
-    <input type="text" id="titulo" placeholder="Nome do produto" required>
-    <input type="number" id="preco" placeholder="Preço" step="0.01" required>
-    <input type="url" id="imagem" placeholder="URL da imagem (opcional)">
-    <button type="submit" id="btn-salvar">Adicionar ao Catálogo</button>
-    <button type="button" id="btn-cancelar" style="display: none;">Cancelar</button>
-  </form>
-  
-  <!-- Campo de Consulta / Pesquisa -->
-  <div style="margin-bottom: 20px;">
-    <input type="search" id="campo-busca" placeholder="Consultar produto pelo nome..." style="width: 100%; max-width: 400px;">
-  </div>
+  <section id="view-catalogo" class="spa-view">
+    <form id="form-produto">
+      <input type="hidden" id="produto-id">
+      <input type="text" id="titulo" placeholder="Nome do produto" required>
+      <input type="number" id="preco" placeholder="Preço" step="0.01" required>
+      <input type="url" id="imagem" placeholder="URL da imagem (opcional)">
+      <button type="submit" id="btn-salvar">Adicionar ao Catálogo</button>
+      <button type="button" id="btn-cancelar" style="display: none;">Cancelar</button>
+    </form>
+    
+    <div style="margin-bottom: 20px;">
+      <input type="search" id="campo-busca" placeholder="Consultar produto pelo nome..." style="width: 100%; max-width: 400px;">
+    </div>
 
-  <!-- Painel de Solicitação de Entrega (Abre ao clicar na peça) -->
-  <form id="form-entrega" style="display: none;">
-    <h3 id="titulo-entrega" style="width: 100%; color: #6c47ff;">Dados de Entrega</h3>
-    <input type="hidden" id="entrega-produto">
-    <input type="text" id="entrega-endereco" placeholder="Endereço completo (Rua, Nº, Bairro)" required>
-    <input type="tel" id="entrega-telefone" placeholder="Telefone / WhatsApp" required>
-    <button type="submit" id="btn-confirmar-entrega">Confirmar Entrega</button>
-    <button type="button" id="btn-fechar-entrega">Fechar</button>
-  </form>
+    <div id="catalogo-container" class="grid"></div>
+  </section>
 
+  <section id="view-entregas" class="spa-view" style="display: none;">
+    <form id="form-entrega">
+      <h2 id="titulo-entrega" style="width: 100%; color: var(--roxo);">Solicitar Nova Entrega</h2>
+      <input type="text" id="entrega-produto" placeholder="Nome da peça escolhida" required>
+      <input type="text" id="entrega-endereco" placeholder="Endereço completo (Rua, Nº, Bairro)" required>
+      <input type="tel" id="entrega-telefone" placeholder="Telefone / WhatsApp" required>
+      <button type="submit" id="btn-confirmar-entrega">Confirmar Entrega</button>
+      <button type="button" id="btn-voltar-catalogo" onclick="navegarPara('catalogo')">Voltar ao Catálogo</button>
+    </form>
 
-  <!-- Onde os itens vão aparecer (GET) -->
-  <div id="catalogo-container" class="grid"></div>
+    <h2 style="margin: 24px 0 14px; color: var(--roxo);">Entregas Solicitadas</h2>
+    <div id="lista-entregas" class="grid"></div>
+  </section>
 
-  <script src="scripts.js"></script>
 </body>
 </html>
