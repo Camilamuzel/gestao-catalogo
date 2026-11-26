@@ -18,6 +18,11 @@ function navegarPara(tela) {
   document.getElementById('nav-catalogo').classList.toggle('ativo', tela === 'catalogo');
   document.getElementById('nav-entregas').classList.toggle('ativo', tela === 'entregas');
 
+  //imagem godzilla nas entregas kkkk
+  const bannerTitulo = document.querySelector('h1');
+  bannerTitulo.classList.toggle('banner-entregas', tela === 'entregas');
+  bannerTitulo.textContent = tela === 'entregas' ? 'Acompanhe suas Entregas!' : 'Monte seu Guarda Roupa!';
+
   if (tela === 'entregas') carregarEntregas();
 }
 
